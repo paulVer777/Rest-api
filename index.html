@@ -14,94 +14,87 @@
 <div id="tasks"></div>
 
 
-
-
-
-
 <script>
 
+    const getAllTasksForMe = (asignee) => {
 
-    const MY_ID = '5aeffeb66f78ba537f03ade2';
-
-    const prop="create";
-    const value="Paweł";
-
-
-
-    const getMyTasks = (prop,value) => {
-
-        return fetch(`https://tasks.isa.valuepoint.pl/tasks/search/${prop}/${value}`) //template strings, $,brackets i pokaze zawartosc
+        return fetch(`https://tasks.isa.valuepoint.pl/tasks/search/assignee/${asignee}`) //template strings, $,brackets i pokaze zawartosc
 
             .then(response => response.json()).then((data) => {
 
                 console.log('data', data)
 
-
-            })
-
+            });
     };
 
-    getMyTasks("creator","Paweł");
+    getAllTasksForMe("Paweł");
 
 
+    const getMyTasks = (creator) => {
+
+        return fetch(`https://tasks.isa.valuepoint.pl/tasks/search/creator/${creator}`) //template strings, $,brackets i pokaze zawartosc
+
+            .then(response => response.json()).then((tasks) => {
+
+                const html = `<ul>
+                    ${tasks.data.map((task) => {
+                    return `<li>
+                    <strong>Tutuł: ${task.title}</strong><br/>
+                    Od: ${task.creator} -
+                    Dla: ${task.assignee}<br/>
+                    </li>`
+                }).join('')}
+                    </ul>`;
+                document.getElementById('tasks').innerHTML = html;
 
 
+            });
+    };
 
-/*
-
-    const addTaskToUser=(creator,title)=> {
-
-        const url = "https://tasks.isa.valuepoint.pl/tasks/search/{prop}/{value}";
-
-        const task = {
+    getMyTasks("Paweł");
 
 
-            creator: creator,
-            title: title
+    /*
 
+        const addTaskToUser=(creator,title)=> {
+
+            const url = "https://tasks.isa.valuepoint.pl/tasks/search/{prop}/{value}";
+
+            const task = {
+
+
+                creator: creator,
+                title: title
+
+
+            };
+
+            const fetchConfig = {
+
+                method: "PUT",
+                body: JSON.stringify(task),
+                headers: {
+
+                    "Content-Type": "application/json"
+                }
+
+            };
+
+
+            fetch(url, fetchConfig) //template strings, $,brackets i pokaze zawartosc
+
+                .then(response => response.json()).then((data) => {
+
+                console.log('data', data)
+
+
+            });
 
         };
 
-        const fetchConfig = {
+        addTaskToUser("pawel2222@onet.eu","create homepage")
 
-            method: "PUT",
-            body: JSON.stringify(task),
-            headers: {
-
-                "Content-Type": "application/json"
-            }
-
-        };
-
-
-        fetch(url, fetchConfig) //template strings, $,brackets i pokaze zawartosc
-
-            .then(response => response.json()).then((data) => {
-
-            console.log('data', data)
-
-
-        });
-
-    };
-
-    addTaskToUser("pawel2222@onet.eu","create homepage")
-
-*/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    */
 
 
 </script>
