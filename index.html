@@ -9,16 +9,28 @@
 </head>
 <body>
 
+<h2>Moje Taski</h2>
+
+<div id="tasks"></div>
+
+
+
+
+
 
 <script>
 
 
     const MY_ID = '5aeffeb66f78ba537f03ade2';
 
+    const prop="create";
+    const value="Paweł";
 
-    const getMyUser = (id) => {
 
-        return fetch(`https://tasks.isa.valuepoint.pl/users/${id}`) //template strings, $,brackets i pokaze zawartosc
+
+    const getMyTasks = (prop,value) => {
+
+        return fetch(`https://tasks.isa.valuepoint.pl/tasks/search/${prop}/${value}`) //template strings, $,brackets i pokaze zawartosc
 
             .then(response => response.json()).then((data) => {
 
@@ -29,17 +41,17 @@
 
     };
 
-    getMyUser(MY_ID);
+    getMyTasks("creator","Paweł");
 
 
 
 
 
-
+/*
 
     const addTaskToUser=(creator,title)=> {
 
-        const url = "https://tasks.isa.valuepoint.pl/tasks/add";
+        const url = "https://tasks.isa.valuepoint.pl/tasks/search/{prop}/{value}";
 
         const task = {
 
@@ -73,9 +85,9 @@
 
     };
 
-    addTaskToUser("Paweł","Sprawdzić po stronie klienta")
+    addTaskToUser("pawel2222@onet.eu","create homepage")
 
-
+*/
 
 
 
