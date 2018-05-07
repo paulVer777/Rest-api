@@ -18,22 +18,30 @@
 
 
 
+
+
+
+
+
     console.log('fetch',window.fetch);
 
 
-     fetch('https://tasks.isa.valuepoint.pl/users')
 
-         .then(response=>response.json()).then((data)=>{
 
-console.log('data',data)
+const getAllTasks=()=> {
 
+     return fetch('https://tasks.isa.valuepoint.pl/tasks')
+
+        .then(response => response.json()).then((data) => {
+
+        console.log('data', data)
 
 
     })
 
+};
 
-
-
+getAllTasks();
 
 
 </script>
