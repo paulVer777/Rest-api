@@ -23,14 +23,14 @@
 
 
 
-    console.log('fetch',window.fetch);
+    const MY_ID='5aeffeb66f78ba537f03ade2';
 
 
 
 
-const getAllTasks=()=> {
+const getMyUser=(id)=> {
 
-     return fetch('https://tasks.isa.valuepoint.pl/tasks')
+     return fetch(`https://tasks.isa.valuepoint.pl/users/${id}`) //template strings, $,brackets i pokaze zawartosc
 
         .then(response => response.json()).then((data) => {
 
@@ -41,7 +41,21 @@ const getAllTasks=()=> {
 
 };
 
-getAllTasks();
+getMyUser(MY_ID);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 </script>
