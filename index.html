@@ -12,6 +12,8 @@
 <h2>Moje Taski</h2>
 
 <div id="tasks"></div>
+<h2>Moje przypisane taski</h2>
+<div id="assignedtasks"></div>
 
 
 <script>
@@ -42,6 +44,8 @@
                     <strong>Tutuł: ${task.title}</strong><br/>
                     Od: ${task.creator} -
                     Dla: ${task.assignee}<br/>
+                    <button>Przypisz do</button>
+                    <button>Usuń</button>
                     </li>`
                 }).join('')}
                     </ul>`;
@@ -52,6 +56,82 @@
     };
 
     getMyTasks("Paweł");
+
+    const assignTask = (taskid,asignee) => {
+
+        return fetch(`https://tasks.isa.valuepoint.pl/tasks/${taskid}/assing-to/${asignee}`) //template strings, $,brackets i pokaze zawartosc
+
+            .then(response => response.json()).then((data) => {
+
+                console.log('data', data)
+
+            });
+    };
+
+
+
+window.assignTo=(task_id)=>{
+
+
+    const asignee=prompt('podaj do kogo przypisujesz taska');
+
+    const url=`http://tasks.isa.valuepoint.pl/tasks/${task_id}/assign-to/${asignee}`
+
+
+    if(asignee.length) {
+
+        fetch(url)
+            .then(d=>d.json())
+            .then((data)=>{
+
+                console.log('assingTo',data);
+                alert(`Przypisane do ${asignee}`)
+
+            })
+
+    }
+
+};
+
+
+
+    const assignTask1 = (creator) => {
+
+        return fetch(`https://tasks.isa.valuepoint.pl/tasks/search/assignee/${creator}`) //template strings, $,brackets i pokaze zawartosc
+
+            .then(response => response.json()).then((tasks) => {
+
+                const html = `<ul>
+                    ${tasks.data.map((task) => {
+                    return `<li>
+                    <strong>Tutuł: ${task.title}</strong><br/>
+                    Od: ${task.creator} -
+                    Dla: ${task.assignee}<br/>
+                    <button onclick="window.assignTo('${task._id}')">Przypisz do</button>
+                    <button>Usuń</button>
+                    </li>`
+                }).join('')}
+                    </ul>`;
+
+
+                document.getElementById('assignedtasks').innerHTML = html;
+
+
+            });
+    };
+
+    assignTask1("Paweł");
+
+    setInterval(()=>{
+
+        getAllTasksForMe('Paweł')
+
+    },10000)
+
+
+
+
+
 
 
     /*
