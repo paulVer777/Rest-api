@@ -10,38 +10,72 @@
 <body>
 
 
-
-
-
-
 <script>
 
 
+    const MY_ID = '5aeffeb66f78ba537f03ade2';
+
+
+    const getMyUser = (id) => {
+
+        return fetch(`https://tasks.isa.valuepoint.pl/users/${id}`) //template strings, $,brackets i pokaze zawartosc
+
+            .then(response => response.json()).then((data) => {
+
+                console.log('data', data)
+
+
+            })
+
+    };
+
+    getMyUser(MY_ID);
 
 
 
 
 
 
-    const MY_ID='5aeffeb66f78ba537f03ade2';
+
+    const addTaskToUser=(creator,title)=> {
+
+        const url = "https://tasks.isa.valuepoint.pl/tasks/add";
+
+        const task = {
 
 
+            creator: creator,
+            title: title
 
 
-const getMyUser=(id)=> {
+        };
 
-     return fetch(`https://tasks.isa.valuepoint.pl/users/${id}`) //template strings, $,brackets i pokaze zawartosc
+        const fetchConfig = {
 
-        .then(response => response.json()).then((data) => {
+            method: "PUT",
+            body: JSON.stringify(task),
+            headers: {
 
-        console.log('data', data)
+                "Content-Type": "application/json"
+            }
+
+        };
 
 
-    })
+        fetch(url, fetchConfig) //template strings, $,brackets i pokaze zawartosc
 
-};
+            .then(response => response.json()).then((data) => {
 
-getMyUser(MY_ID);
+            console.log('data', data)
+
+
+        });
+
+    };
+
+    addTaskToUser("Paweł","Sprawdzić po stronie klienta")
+
+
 
 
 
@@ -59,8 +93,6 @@ getMyUser(MY_ID);
 
 
 </script>
-
-
 
 
 </body>
